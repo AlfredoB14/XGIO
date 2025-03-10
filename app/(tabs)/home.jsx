@@ -1,18 +1,18 @@
-import { Platform, Text, View, ScrollView, Image, TouchableOpacity, SafeAreaView } from 'react-native'
+import { Platform, Text, View, ScrollView, Image, TouchableOpacity} from 'react-native'
 import { Link } from 'expo-router';
 import React from 'react'
-import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView} from 'react-native-safe-area-context';
 const Home = () => {
   return (
     <SafeAreaView className="flex-1 bg-white" >
       <ScrollView className="flex-1 bg-white">
         {/* Header */}
-        <View className="bg-[#23a9da] h-96 p-6 rounded-b-3xl shadow-md shadow-black" style={{ paddingTop: Platform.OS === "android" ? 70 : 40 }} > 
+        <View className="bg-[#23a9da] h-72 p-6 rounded-b-3xl shadow-md shadow-black" > 
           <View className="flex-row justify-between">
             <Text className="text-lg font-pbold text-white">Good Morning, Aldri</Text>
             <Text className="font-psemibold text-white">Rabu, 4 Maret 2020</Text>
           </View>
-          <View className="items-center mt-16">
+          <View className="items-center mt-10">
             <Image
               source={{ uri: "https://via.placeholder.com/80" }}
               className="w-32 h-32 rounded-full bg-gray-300"
@@ -86,8 +86,6 @@ const Home = () => {
           </View>
         </View>
       </ScrollView>
-
-      <StatusBar barStyle='light-content' />
     </SafeAreaView>
   );
 }
