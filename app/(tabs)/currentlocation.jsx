@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import MapView from 'react-native-maps'
 import React from 'react'
+import BottomSheet from '../../components/bottomSheet'
 
 const CurrentLocation = () => {
   return (
@@ -16,6 +17,8 @@ const CurrentLocation = () => {
           }}
         />
       </ScrollView>
+
+      <BottomSheet />      
     </View>
   )
 }
@@ -23,8 +26,8 @@ const CurrentLocation = () => {
 const styles = StyleSheet.create({
   map: {
     width: '100%',
-    height: 600,
+    height: 800,
   },
 })
 
-export default CurrentLocation
+export default CurrentLocation;

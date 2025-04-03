@@ -67,6 +67,13 @@ const TabsLayout = () => {
             header: () => <CustomHeader tabName={"Ruta de Hoy "} />,
           }}
         />
+        <Tabs.Screen
+          name="historyLocationMap"
+          options={{
+            title: "History Location Map",
+            headerShown: false
+          }}
+        />
       </Tabs>
     </>
   )

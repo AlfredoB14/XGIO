@@ -1,6 +1,6 @@
-import { View, Text, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform, Alert, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SignUp = () => {
@@ -9,8 +9,65 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const router = useRouter();
+
+  const handleSignUp = async () => {
+    if (!fullName || !email || !password || !confirmPassword) {
+      setError("Por favor completa todos los campos.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://10.0.2.2:5000/register", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          display_name: fullName,
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        Alert.alert(
+          "Registro exitoso", 
+          "Tu cuenta ha sido creada correctamente",
+          [{ text: "OK", onPress: () => router.replace("/sign-in") }]
+        );
+      } else {
+        Alert.alert("Error", data.message || "Error en el registro");
+      }
+    } catch (error) {
+      console.error("Error en el registro:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <SafeAreaView className="flex-1 bg-white">
+
+      {error && (
+        <View className="bg-red-100 p-4 rounded-lg m-4">
+          <Text className="text-red-700">{error}</Text>
+        </View>
+      )}
+
+
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
         className="flex-1"
@@ -86,9 +143,17 @@ const SignUp = () => {
               <Text className="text-gray-700 font-psemibold">Registrarse con Google</Text>
             </TouchableOpacity>
 
-            {/* Regular Sign-Up Button */}
-            <TouchableOpacity className="w-full bg-[#23a9da] py-3 rounded-lg mt-4 items-center">
-              <Text className="text-white text-lg font-psemibold">Registrarse</Text>
+            {/* Regular Sign-Up Button with onPress and loading indicator */}
+            <TouchableOpacity 
+              className="w-full bg-[#23a9da] py-3 rounded-lg mt-4 items-center"
+              onPress={handleSignUp}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="white" />
+              ) : (
+                <Text className="text-white text-lg font-psemibold">Registrarse</Text>
+              )}
             </TouchableOpacity>
 
             <Text className="text-gray-500 mt-4 font-pmedium">

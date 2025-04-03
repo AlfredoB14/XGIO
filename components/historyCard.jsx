@@ -1,15 +1,32 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, Pressable } from 'react-native';
+import React from 'react';
+import { useRouter } from 'expo-router';
 
-const HistoryCard = ({ location }) => (
-    <View className="bg-white p-4 m-2 rounded-lg shadow-md flex-row justify-between items-center">
-      <View>
+const HistoryCard = ({ location }) => {
+  const router = useRouter();
+
+  const handlePress = () => {
+    router.push({
+      pathname: '/historyLocationMap',
+      params: {
+        date: location.date,
+        latitude: location.latitude,
+        longitude: location.longitude,
+        name: location.name,
+        address: location.address,
+      },
+    });
+  };
+
+  return (
+    <Pressable onPress={handlePress}>
+      <View className="p-4 bg-white m-2 rounded-lg shadow">
         <Text className="text-lg font-pbold">{location.name}</Text>
-        <Text className="text-gray-600 font-pregular">{location.address}</Text>
-        <Text className="text-gray-500 font-pregular">{location.date}</Text>
+        <Text className="text-gray-600">{location.address}</Text>
+        <Text className="text-gray-600">{location.date}</Text>
       </View>
-      <Ionicons name="compass" size={32} color="#4B5563" />
-    </View>
+    </Pressable>
   );
+};
 
-export default HistoryCard
+export default HistoryCard;

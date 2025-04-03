@@ -1,11 +1,63 @@
-import { View, Text, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform, Alert, ActivityIndicator } from 'react-native';
 import { useState } from 'react';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  
+  // Función para almacenar el token en AsyncStorage
+  const storeToken = async (token, name) => {
+    try {
+      await AsyncStorage.setItem('@user_token', token);
+      await AsyncStorage.setItem('@user_name', name); // Guardar el nombre de usuario
+    } catch (e) {
+      console.error("Error saving token", e);
+    }
+  };
+
+  // Función para el login
+  const handleLogin = async () => {
+    // Validación básica
+    if (!email || !password) {
+      Alert.alert("Error", "Por favor ingresa tu correo y contraseña");
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      const response = await fetch("http://10.0.2.2:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.token) {
+        await storeToken(data.token, data.display_name);  // Guardar el token
+
+        console.log("Login exitoso");
+        
+        // Redirigir al usuario a la pantalla de inicio
+        router.replace('/(tabs)/home');
+      } else {
+        Alert.alert("Error", "Credenciales incorrectas");
+      }
+    } catch (error) {
+      console.error("Error en el login:", error);
+      Alert.alert("Error", "Ocurrió un error durante el login. Verifica tu conexión a internet.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -32,6 +84,7 @@ const SignIn = () => {
                   value={email}
                   onChangeText={setEmail}
                   keyboardType="email-address"
+                  autoCapitalize="none"
                 />
               </View>
 
@@ -68,11 +121,25 @@ const SignIn = () => {
             </TouchableOpacity>
 
             {/* Regular Sign-In Button */}
-            <Link href="/(tabs)/home" asChild>
-              <TouchableOpacity className="w-full bg-[#23a9da] py-3 rounded-lg mt-4 items-center">
+            <TouchableOpacity 
+              className="w-full bg-[#23a9da] py-3 rounded-lg mt-4 items-center"
+              onPress={handleLogin}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="white" />
+              ) : (
                 <Text className="text-white text-lg font-psemibold">Iniciar Sesión</Text>
-              </TouchableOpacity>
-            </Link>
+              )}
+            </TouchableOpacity>
+
+            {/* Skip Login Button
+            <TouchableOpacity 
+              className="w-full border-2 border-[#23a9da] py-3 rounded-lg mt-4 items-center"
+              onPress={() => router.replace('/(tabs)/home')}
+            >
+              <Text className="text-[#23a9da] text-lg font-psemibold">Continuar sin iniciar sesión</Text>
+            </TouchableOpacity> */}
 
             <Text className="text-gray-500 mt-4 font-pmedium">
               ¿Necesitas crear una cuenta? 
