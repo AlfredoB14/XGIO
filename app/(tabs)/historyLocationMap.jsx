@@ -6,7 +6,6 @@ import CustomHeader from '../../components/header';
 import BottomSheet from '../../components/bottomSheet';
 
 const HistoryLocationMap = () => {
-  // Use useLocalSearchParams instead of useSearchParams
   const { date, latitude, longitude, name, address } = useLocalSearchParams();
   
   // Parse the latitude and longitude to numbers
