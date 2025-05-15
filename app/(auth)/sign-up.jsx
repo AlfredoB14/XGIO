@@ -27,7 +27,7 @@ const SignUp = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://10.0.2.2:5000/register", {
+      const response = await fetch("https://backend-xgio.vercel.app/register", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

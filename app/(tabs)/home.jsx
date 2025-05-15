@@ -71,27 +71,27 @@ const Home = () => {
         {/* Navigation Buttons */}
         <View className="flex-row flex-wrap justify-center gap-10 px-4 ">
 
+        <View className="flex-col items-center gap-4">
+            <Image 
+              source={require("../../assets/TodaysRoute.png")}
+              style={{ width: 80, height: 80 }}
+              className="mr-2"
+            />
+            <Link href="/todaysroute" asChild>
+              <TouchableOpacity className="bg-[#23a9da] p-4 rounded-lg w-44 shadow-md shadow-black">
+                <Text className="text-white text-center font-pbold">Ruta de hoy</Text>
+              </TouchableOpacity>
+            </Link>
+          </View>
           <View className="flex-col items-center gap-4">
             <Image 
               source={require("../../assets/CurrentLocation.png")}
               style={{ width: 80, height: 80 }}
               className="mr-2"
             />
-          <Link href="/currentlocation" asChild>
-            <TouchableOpacity className="bg-[#23a9da] p-4 rounded-lg w-44 shadow-md shadow-black">
-              <Text className="text-white text-center font-pbold">Ubicación Actual</Text>
-            </TouchableOpacity>
-          </Link>
-          </View>
-          <View className="flex-col items-center gap-4">
-            <Image 
-              source={require("../../assets/PointLocation.png")}
-              style={{ width: 80, height: 80 }}
-              className="mr-2"
-            />
-            <Link href="/pointlocation" asChild>
+            <Link href="/currentlocation" asChild>
               <TouchableOpacity className="bg-[#23a9da] p-4 rounded-lg w-44 shadow-md shadow-black">
-                <Text className="text-white text-center font-pbold">Point Location</Text>
+                <Text className="text-white text-center font-pbold">Ubicación Actual</Text>
               </TouchableOpacity>
             </Link>
           </View>
@@ -106,18 +106,6 @@ const Home = () => {
             <Link href="/history" asChild>
               <TouchableOpacity className="bg-[#23a9da] p-4 rounded-lg w-44 shadow-md shadow-black">
                 <Text className="text-white text-center font-pbold">Historial</Text>
-              </TouchableOpacity>
-            </Link>
-          </View>
-          <View className="flex-col items-center gap-4">
-            <Image 
-              source={require("../../assets/TodaysRoute.png")}
-              style={{ width: 80, height: 80 }}
-              className="mr-2"
-            />
-            <Link href="/todaysroute" asChild>
-              <TouchableOpacity className="bg-[#23a9da] p-4 rounded-lg w-44 shadow-md shadow-black">
-                <Text className="text-white text-center font-pbold">Ruta de hoy</Text>
               </TouchableOpacity>
             </Link>
           </View>

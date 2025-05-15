@@ -30,7 +30,7 @@ const SignIn = () => {
     
     try {
       setLoading(true);
-      const response = await fetch("http://10.0.2.2:5000/login", {
+      const response = await fetch("https://backend-xgio.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -133,13 +133,13 @@ const SignIn = () => {
               )}
             </TouchableOpacity>
 
-            {/* Skip Login Button
+            {/* Skip Login Button */}
             <TouchableOpacity 
               className="w-full border-2 border-[#23a9da] py-3 rounded-lg mt-4 items-center"
               onPress={() => router.replace('/(tabs)/home')}
             >
               <Text className="text-[#23a9da] text-lg font-psemibold">Continuar sin iniciar sesión</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             <Text className="text-gray-500 mt-4 font-pmedium">
               ¿Necesitas crear una cuenta? 

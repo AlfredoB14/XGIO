@@ -1,3 +1,4 @@
+
 {
   "expo": {
     "name": "XGIO",
@@ -17,7 +18,11 @@
       "supportsTablet": true
     },
     "android": {
-      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCS6aERhUEtRTbt_06aF1VNaWlmEfaAo20"
+        }
+      },
       "package": "com.gioxance.xgio",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.jpg",
@@ -29,6 +34,14 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "8a39642c-c887-4275-adea-325737d7d824"
+      }
+    }
   }
 }
