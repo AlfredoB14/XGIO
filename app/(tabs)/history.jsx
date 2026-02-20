@@ -16,7 +16,7 @@ const History = () => {
       if (!token) {
         throw new Error('No token found');
       }
-      const response = await fetch('https://backend-xgio.vercel.app/get-routes', {
+      const response = await fetch('https://backend-xgio-delta.vercel.app/get-routes', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
